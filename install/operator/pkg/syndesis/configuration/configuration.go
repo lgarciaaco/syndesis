@@ -299,7 +299,7 @@ func GetProperties(file string, ctx context.Context, client client.Client, synde
 	// Determine if the PostgreSQL database running in syndesis-db pod needs upgrading, first fetch the version currently running
 	currentPostgreSQLVersion, err := util.PostgreSQLVersionAt("syndesis", configuration.Syndesis.Components.Database.Password, syndesis.Spec.Components.Database.Name, "syndesis-db", 5432)
 	if err != nil {
-		log.Error(err, "Unable to determine current version of PostgreSQL running in syndesis-db pod")
+		log.V(2).Info("Unable to determine current version of PostgreSQL running in syndesis-db pod, err: " + err.Error())
 		return configuration, nil
 	}
 
@@ -309,7 +309,7 @@ func GetProperties(file string, ctx context.Context, client client.Client, synde
 	}
 	wantedPostgreSQLVersion, err := postgreSQLVersionFromInitPod(goC, syndesis)
 	if err != nil {
-		log.Error(err, "Unable to determine next version of PostgreSQL from the operator init container")
+		log.V(2).Info("Unable to determine next version of PostgreSQL from the operator init container, err: " + err.Error())
 		return configuration, nil
 	}
 

@@ -29,7 +29,7 @@ var versionMatch = regexp.MustCompile(`^\d+\.\d+`)
 
 // PostgreSQLVersionAt determines the version of a PotgreSQL database running at hostname and port
 func PostgreSQLVersionAt(username string, password string, database string, hostname string, port int) (float64, error) {
-	log.Info(fmt.Sprintf("Connecting to PostgreSQL server running at %s:%d", hostname, port))
+	log.V(2).Info(fmt.Sprintf("Connecting to PostgreSQL server running at %s:%d", hostname, port))
 	db, err := sql.Open("postgres", fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", username, password, hostname, port, database))
 	if err != nil {
 		return 0, err
